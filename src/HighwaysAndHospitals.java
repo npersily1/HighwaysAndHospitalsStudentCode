@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Highways & Hospitals
  * A puzzle created by Zach Blick
@@ -19,6 +21,16 @@ public class HighwaysAndHospitals {
         if(highwayCost > hospitalCost) {
             return n * hospitalCost;
         }
+        ArrayList<ArrayList<Integer>> subgraphs =new ArrayList<ArrayList<Integer>>();
+        // Seperate into subgraphs
+        for (int i = 0; i < cities.length; i++) {
+
+        }
+        //  for each subgraph add the cost of hospital + (n-1) * highway cost to the total sum
+
+
+
+
 
 
 
