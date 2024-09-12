@@ -38,9 +38,15 @@ public class HighwaysAndHospitals {
             }
             // if temp two is marked down
             else if (temp2 >= 0 && temp1 < 0) {
-                subgraphs.get(temp2).add(cities[i][1]);
+                subgraphs.get(temp2).add(cities[i][0]);
             }
-        } int sum = 0;
+
+            else if(temp1 != temp2){
+                subgraphs.get(temp1).addAll(subgraphs.get(temp2));
+                subgraphs.remove(temp2);
+            }
+        }
+        int sum = 0;
         //  for each subgraph add the cost of hospital + (n-1) * highway cost to the total sum
         for (int i = 0; i < subgraphs.size(); i++) {
             sum += hospitalCost + ((subgraphs.get(i).size() - 1) * highwayCost);
