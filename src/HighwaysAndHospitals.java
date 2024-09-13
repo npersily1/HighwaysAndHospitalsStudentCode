@@ -28,6 +28,7 @@ public class HighwaysAndHospitals {
 
             // If its a new subgraph
             if ( temp1 < 0 && temp2 < 0) {
+                // Create new subgraph with 2 new elements
                 subgraphs.add(new ArrayList<Integer>());
                 subgraphs.get(subgraphs.size() - 1).add(cities[i][0]);
                 subgraphs.get(subgraphs.size() - 1).add(cities[i][1]);
@@ -46,14 +47,9 @@ public class HighwaysAndHospitals {
                 subgraphs.remove(temp2);
             }
         }
-        int sum = 0;
+
         //  for each subgraph add the cost of hospital + (n-1) * highway cost to the total sum
-        for (int i = 0; i < subgraphs.size(); i++) {
-            sum += hospitalCost + ((subgraphs.get(i).size() - 1) * highwayCost);
-        }
-
-
-        return sum;
+        return (hospitalCost * subgraphs.size()) + highwayCost *(n - subgraphs.size());
     }
 
     public static int isInSubgraph(int n, ArrayList<ArrayList<Integer>> subgraphs) {
