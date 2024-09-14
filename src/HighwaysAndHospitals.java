@@ -17,6 +17,7 @@ public class HighwaysAndHospitals {
      */
     public static long cost(int n, int hospitalCost, int highwayCost, int cities[][]) {
 
+        long numConnectedCities = 0;
         if (highwayCost > hospitalCost) {
             return n * hospitalCost;
         }
@@ -32,14 +33,18 @@ public class HighwaysAndHospitals {
                 subgraphs.add(new ArrayList<Integer>());
                 subgraphs.get(subgraphs.size() - 1).add(cities[i][0]);
                 subgraphs.get(subgraphs.size() - 1).add(cities[i][1]);
+
+                numConnectedCities += 2;
             }
             // if temp1 is marked down
             else if (temp1 >= 0 && temp2 < 0) {
                 subgraphs.get(temp1).add(cities[i][1]);
+                numConnectedCities += 1;
             }
             // if temp two is marked down
             else if (temp2 >= 0 && temp1 < 0) {
                 subgraphs.get(temp2).add(cities[i][0]);
+                numConnectedCities += 1;
             }
 
             else if(temp1 != temp2){
@@ -49,7 +54,13 @@ public class HighwaysAndHospitals {
         }
 
         //  for each subgraph add the cost of hospital + (n-1) * highway cost to the total sum
-        return (hospitalCost * subgraphs.size()) + highwayCost *(n - subgraphs.size());
+
+
+        long sum = (hospitalCost * subgraphs.size()) +  (n - numConnectedCities) * hospitalCost;
+        for (int i = 0; i < subgraphs.size(); i++) {
+            sum += (subgraphs.get(i).size() - 1) * highwayCost;
+        }
+        return sum;
     }
 
     public static int isInSubgraph(int n, ArrayList<ArrayList<Integer>> subgraphs) {
