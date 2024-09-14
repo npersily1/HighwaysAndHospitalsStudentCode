@@ -19,7 +19,8 @@ public class HighwaysAndHospitals {
 
         long numConnectedCities = 0;
         if (highwayCost > hospitalCost) {
-            return n * hospitalCost;
+            long i = (long)n * hospitalCost;
+            return i;
         }
         ArrayList<ArrayList<Integer>> subgraphs = new ArrayList<ArrayList<Integer>>();
         // Seperate into subgraphs
