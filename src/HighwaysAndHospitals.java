@@ -19,20 +19,37 @@ public class HighwaysAndHospitals {
 
 
         if (highwayCost > hospitalCost) {
-            long i = (long)n * hospitalCost;
+            long i = (long) n * hospitalCost;
             return i;
         }
         int[] subgraphs = new int[n + 1];
+        for (int i = 1; i < subgraphs.length; i++) {
+            subgraphs[i] = i;
+        }
+
 
         int c = n;
 
         for (int i = 0; i < cities.length; i++) {
-            if(!(subgraphs[cities[i][1]] == cities[i][0])) {
-                subgraphs[cities[i][1]] = cities[i][0];
+            int leftCity = cities[i][0];
+            int rightCity = cities[i][1];
+
+            // Traverse up their respective graphs to find the root and set it equal to left and right
+            while (subgraphs[leftCity] != leftCity) {
+                leftCity = subgraphs[leftCity];
+            }
+            while (subgraphs[rightCity] != rightCity) {
+                rightCity = subgraphs[rightCity];
+            }
+
+
+            if (leftCity != rightCity) {
+
+                subgraphs[rightCity] = leftCity;
                 c--;
             }
         }
-        return (c * (long)hospitalCost) + (n-c) * (long)highwayCost;
+        return (c * (long) hospitalCost) + (n - c) * (long) highwayCost;
 
     }
 
