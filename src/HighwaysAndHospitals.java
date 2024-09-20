@@ -23,9 +23,7 @@ public class HighwaysAndHospitals {
             return i;
         }
         int[] subgraphs = new int[n + 1];
-        for (int i = 1; i < subgraphs.length; i++) {
-            subgraphs[i] = i;
-        }
+
 
 
         int c = n;
@@ -35,18 +33,33 @@ public class HighwaysAndHospitals {
             int rightCity = cities[i][1];
 
             // Traverse up their respective graphs to find the root and set it equal to left and right
-            while (subgraphs[leftCity] != leftCity) {
+            while (subgraphs[leftCity] > 0) {
                 leftCity = subgraphs[leftCity];
             }
-            while (subgraphs[rightCity] != rightCity) {
+            while (subgraphs[cities[i][0]] > 0) {
+                int temp = subgraphs[cities[i][0]];
+                subgraphs[cities[i][0]] = leftCity;
+                cities[i][0] = temp;
+            }
+            while (subgraphs[rightCity] > 0) {
                 rightCity = subgraphs[rightCity];
             }
-
-
-            if (leftCity != rightCity) {
-
-                subgraphs[rightCity] = leftCity;
-                c--;
+            while (subgraphs[cities[i][1]] > 0) {
+                int temp = subgraphs[cities[i][1]];
+                subgraphs[cities[i][1]] = rightCity;
+                cities[i][1] = temp;
+            }
+            if(leftCity != rightCity) {
+                // If the left root is of higher order than the right root
+                if (subgraphs[leftCity] < subgraphs[rightCity]) {
+                    subgraphs[leftCity] += subgraphs[rightCity] - 1;
+                    c--;
+                    subgraphs[rightCity] = leftCity;
+                } else {
+                    subgraphs[rightCity] += subgraphs[leftCity] - 1;
+                    c--;
+                    subgraphs[leftCity] = rightCity;
+                }
             }
         }
         return (c * (long) hospitalCost) + (n - c) * (long) highwayCost;
